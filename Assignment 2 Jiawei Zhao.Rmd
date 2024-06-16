@@ -1,0 +1,60 @@
+---
+title: "ANA 515 Assignment 2"
+author: "Jiawei Zhao"
+date: "2024-06-16"
+output: word_document
+---
+
+```{r, echo=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+# Section 1: Description of the data
+
+# The dataset used in this analysis measures alcohol consumption across different countries. The data includes the average servings of beer, spirits, and wine consumed per person per year, as well as the total liters of pure alcohol consumed. This data could be used to answer research questions about the patterns of alcohol consumption globally, such as which countries have the highest alcohol consumption, or the type of alcohol most consumed in different regions.
+
+# The dataset is saved in a CSV file, which is a type of flat file where each line of the file corresponds to a data record, and each record is delimited by a comma. CSV files are widely used for data exchange because they are simple and can be opened by many programs, including text editors and spreadsheet software like Microsoft Excel.
+```
+
+
+```{r, echo=TRUE}
+# Load required package for reading CSV files
+library(readr)
+# Read the data from the provided URL and store it in a dataframe
+url <- "https://raw.githubusercontent.com/fivethirtyeight/data/master/alcohol-consumption/drinks.csv"
+drinks_data <- readr::read_csv(url)
+# In this code chunk, I used the readr package's read_csv.
+```
+
+```{r, echo=TRUE}
+# Clean the data by renaming columns for better readability
+colnames(drinks_data)[1] <- "Country"
+colnames(drinks_data)[2] <- "Beer_Servings"
+colnames(drinks_data)[3] <- "Spirit_Servings"
+colnames(drinks_data)[4] <- "Wine_Servings"
+colnames(drinks_data)[5] <- "Total_Litres_of_Pure_Alcohol"
+
+```
+
+```{r, echo=TRUE}
+# Output the number of rows and columns in the dataframe
+n_rows <- nrow(drinks_data)
+n_cols <- ncol(drinks_data)
+
+# Create a table with column names and brief descriptions
+column_names <- c("Country", "Beer_Servings", "Spirit_Servings", "Wine_Servings", "Total_Litres_of_Pure_Alcohol")
+column_descriptions <- c("Name of the country", "Servings of beer per person", "Servings of spirits per person", "Servings of wine per person", "Total liters of pure alcohol consumed per person")
+column_info <- data.frame(Column_Name = column_names, Description = column_descriptions)
+
+knitr::kable(column_info, caption = "Column Descriptions")
+
+```
+
+```{r, echo=TRUE}
+# Select three columns for summary statistics
+selected_columns <- c("Beer_Servings", "Spirit_Servings", "Wine_Servings")
+selected_data <- drinks_data[, selected_columns]
+
+# Calculate summary statistics for the selected columns
+summary_stats <- summary(selected_data)
+summary_stats
+
+```
